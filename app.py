@@ -10,32 +10,62 @@ def create_pdf(content):
 
     pdf = FPDF()
 
-    pdf.add_page()
-
     pdf.set_auto_page_break(
         auto=True,
         margin=15
     )
+
+    pdf.add_page()
 
     pdf.set_font(
         "Arial",
         size=12
     )
 
+    # Remove unsupported unicode
+
     clean_content = content.encode(
         "latin-1",
         "ignore"
-    ).decode("latin-1")
+    ).decode(
+        "latin-1"
+    )
+
+    # Remove markdown symbols
+
+    clean_content = clean_content.replace("#", "")
+    clean_content = clean_content.replace("*", "")
+    clean_content = clean_content.replace("`", "")
 
     lines = clean_content.split("\n")
 
     for line in lines:
 
-        pdf.multi_cell(
-            0,
-            10,
-            line
-        )
+        # Skip empty lines
+
+        if not line.strip():
+
+            pdf.ln(4)
+
+            continue
+
+        # Prevent very long lines
+
+        if len(line) > 300:
+
+            line = line[:300]
+
+        try:
+
+            pdf.multi_cell(
+                180,
+                8,
+                line
+            )
+
+        except:
+
+            continue
 
     pdf_file = "roadmap.pdf"
 
@@ -74,7 +104,7 @@ Features:
 )
 
 # -----------------------------
-# CUSTOM CSS
+# PROFESSIONAL DARK CSS
 # -----------------------------
 
 st.markdown("""
@@ -100,7 +130,7 @@ st.markdown("""
     padding-top: 2rem;
 }
 
-/* Hero Title */
+/* Hero */
 
 .hero-title {
 
@@ -114,8 +144,6 @@ st.markdown("""
 
     margin-bottom: 0.5rem;
 }
-
-/* Subtitle */
 
 .hero-subtitle {
 
@@ -169,10 +197,8 @@ label {
 }
 
 /* -----------------------------
-SELECTBOX FIX
+SELECTBOX
 ----------------------------- */
-
-/* Main Selectbox */
 
 .stSelectbox div[data-baseweb="select"] {
 
@@ -187,7 +213,7 @@ SELECTBOX FIX
     box-shadow: none !important;
 }
 
-/* Internal Select Container */
+/* Internal Container */
 
 .stSelectbox div[data-baseweb="select"] > div {
 
@@ -196,7 +222,7 @@ SELECTBOX FIX
     color: white !important;
 }
 
-/* Remove White Typing Area */
+/* Remove White Input */
 
 .stSelectbox input {
 
@@ -277,7 +303,7 @@ li:hover {
     transition: 0.3s;
 }
 
-/* Hover */
+/* Button Hover */
 
 .stButton>button:hover {
 
@@ -441,7 +467,7 @@ generate = st.button(
 )
 
 # -----------------------------
-# ROADMAP
+# ROADMAP GENERATION
 # -----------------------------
 
 if generate:
@@ -542,20 +568,30 @@ Rules:
                 "✅ Roadmap generated successfully!"
             )
 
-            # PDF Download
+            # -----------------------------
+            # PDF DOWNLOAD
+            # -----------------------------
 
-            pdf_file = create_pdf(
-                roadmap
-            )
+            try:
 
-            with open(
-                pdf_file,
-                "rb"
-            ) as file:
+                pdf_file = create_pdf(
+                    roadmap
+                )
 
-                st.download_button(
-                    label="📥 Download Roadmap as PDF",
-                    data=file,
-                    file_name="AI_Roadmap.pdf",
-                    mime="application/pdf"
+                with open(
+                    pdf_file,
+                    "rb"
+                ) as file:
+
+                    st.download_button(
+                        label="📥 Download Roadmap as PDF",
+                        data=file,
+                        file_name="AI_Roadmap.pdf",
+                        mime="application/pdf"
+                    )
+
+            except:
+
+                st.warning(
+                    "PDF generation temporarily unavailable for this roadmap."
                 )
