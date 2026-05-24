@@ -1,6 +1,14 @@
 import streamlit as st
-from fpdf import FPDF
 from generator import generate_course
+
+from reportlab.platypus import (
+    SimpleDocTemplate,
+    Paragraph,
+    Spacer
+)
+
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.pagesizes import letter
 
 # -----------------------------
 # PDF Generator
@@ -8,30 +16,20 @@ from generator import generate_course
 
 def create_pdf(content):
 
-    pdf = FPDF()
+    pdf_file = "roadmap.pdf"
 
-    pdf.set_auto_page_break(
-        auto=True,
-        margin=15
+    doc = SimpleDocTemplate(
+        pdf_file,
+        pagesize=letter
     )
 
-    pdf.add_page()
+    styles = getSampleStyleSheet()
 
-    pdf.set_font(
-        "Arial",
-        size=12
-    )
+    story = []
 
-    # Clean unsupported unicode
+    # Clean markdown symbols
 
-    clean_content = content.encode(
-        "latin-1",
-        "ignore"
-    ).decode(
-        "latin-1"
-    )
-
-    clean_content = clean_content.replace("#", "")
+    clean_content = content.replace("#", "")
     clean_content = clean_content.replace("*", "")
     clean_content = clean_content.replace("`", "")
 
@@ -39,31 +37,20 @@ def create_pdf(content):
 
     for line in lines:
 
-        if not line.strip():
+        if line.strip() != "":
 
-            pdf.ln(4)
-
-            continue
-
-        if len(line) > 300:
-
-            line = line[:300]
-
-        try:
-
-            pdf.multi_cell(
-                180,
-                8,
-                line
+            para = Paragraph(
+                line,
+                styles["BodyText"]
             )
 
-        except:
+            story.append(para)
 
-            continue
+            story.append(
+                Spacer(1, 10)
+            )
 
-    pdf_file = "roadmap.pdf"
-
-    pdf.output(pdf_file)
+    doc.build(story)
 
     return pdf_file
 
@@ -74,7 +61,7 @@ def create_pdf(content):
 
 st.set_page_config(
     page_title="AI Roadmap Generator",
-    page_icon="🚀",
+    page_icon="💡",
     layout="wide"
 )
 
@@ -82,7 +69,7 @@ st.set_page_config(
 # SIDEBAR
 # -----------------------------
 
-st.sidebar.title("📊 Dashboard")
+st.sidebar.title("Dashboard")
 
 st.sidebar.info(
     """
@@ -98,7 +85,7 @@ Features:
 )
 
 # -----------------------------
-# PROFESSIONAL CSS
+# DARK PROFESSIONAL CSS
 # -----------------------------
 
 st.markdown("""
@@ -113,23 +100,24 @@ MAIN BACKGROUND
     background:
         radial-gradient(
             circle at top right,
-            rgba(59,130,246,0.08),
+            rgba(59,130,246,0.12),
             transparent 20%
         ),
 
         radial-gradient(
             circle at bottom left,
-            rgba(168,85,247,0.06),
+            rgba(168,85,247,0.10),
             transparent 20%
         ),
 
         linear-gradient(
             180deg,
-            #F8FAFC,
-            #EEF2FF
+            #020617,
+            #0F172A,
+            #111827
         );
 
-    color: #0F172A;
+    color: white;
 
     background-attachment: fixed;
 }
@@ -155,7 +143,7 @@ HERO TITLE
 
     text-align: center;
 
-    color: #0F172A;
+    color: white;
 
     margin-bottom: 0.5rem;
 
@@ -170,7 +158,7 @@ SUBTITLE
 
     text-align: center;
 
-    color: #475569;
+    color: #CBD5E1;
 
     margin-bottom: 3rem;
 
@@ -184,19 +172,19 @@ SIDEBAR
 section[data-testid="stSidebar"] {
 
     background: rgba(
-        255,
-        255,
-        255,
-        0.7
+        15,
+        23,
+        42,
+        0.85
     );
 
     backdrop-filter: blur(16px);
 
     border-right: 1px solid rgba(
-        0,
-        0,
-        0,
-        0.05
+        255,
+        255,
+        255,
+        0.08
     );
 }
 
@@ -206,7 +194,7 @@ LABELS
 
 label {
 
-    color: #0F172A !important;
+    color: white !important;
 
     font-weight: 600 !important;
 }
@@ -218,20 +206,20 @@ TEXT AREA
 .stTextArea textarea {
 
     background-color: rgba(
-        255,
-        255,
-        255,
+        17,
+        24,
+        39,
         0.8
     ) !important;
 
-    color: #0F172A !important;
+    color: white !important;
 
     border-radius: 18px !important;
 
     border: 1px solid rgba(
-        0,
-        0,
-        0,
+        255,
+        255,
+        255,
         0.08
     ) !important;
 
@@ -244,7 +232,7 @@ TEXT AREA
 
 .stTextArea textarea::placeholder {
 
-    color: #64748B !important;
+    color: #9CA3AF !important;
 }
 
 /* -----------------------------
@@ -254,16 +242,16 @@ SELECTBOX
 .stSelectbox div[data-baseweb="select"] {
 
     background: rgba(
-        255,
-        255,
-        255,
-        0.8
+        17,
+        24,
+        39,
+        0.85
     ) !important;
 
     border: 1px solid rgba(
-        0,
-        0,
-        0,
+        255,
+        255,
+        255,
         0.08
     ) !important;
 
@@ -274,53 +262,53 @@ SELECTBOX
     box-shadow: none !important;
 }
 
-/* Internal Select */
+/* Internal Container */
 
 .stSelectbox div[data-baseweb="select"] > div {
 
     background: transparent !important;
 
-    color: #0F172A !important;
+    color: white !important;
 }
 
-/* Remove White Inner Box */
+/* Remove White Input */
 
 .stSelectbox input {
 
     background: transparent !important;
 
-    color: #0F172A !important;
+    color: white !important;
 
-    caret-color: #0F172A !important;
+    caret-color: white !important;
 }
 
 /* Dropdown */
 
 div[data-baseweb="popover"] {
 
-    background-color: white !important;
+    background-color: #111827 !important;
 
     border-radius: 12px !important;
 
-    border: 1px solid #E2E8F0 !important;
+    border: 1px solid #374151 !important;
 }
 
 /* Dropdown Options */
 
 li {
 
-    background-color: white !important;
+    background-color: #111827 !important;
 
-    color: #0F172A !important;
+    color: white !important;
 }
 
 /* Hover */
 
 li:hover {
 
-    background-color: #EEF2FF !important;
+    background-color: #2563EB !important;
 
-    color: #2563EB !important;
+    color: white !important;
 }
 
 /* -----------------------------
@@ -378,10 +366,10 @@ ROADMAP BOX
     border-radius: 24px;
 
     background: rgba(
-        255,
-        255,
-        255,
-        0.75
+        17,
+        24,
+        39,
+        0.72
     );
 
     backdrop-filter: blur(18px);
@@ -390,17 +378,17 @@ ROADMAP BOX
         255,
         255,
         255,
-        0.6
+        0.08
     );
 
     margin-top: 2rem;
 
     box-shadow:
         0 10px 40px rgba(
-            15,
-            23,
-            42,
-            0.08
+            0,
+            0,
+            0,
+            0.35
         );
 }
 
@@ -411,16 +399,16 @@ METRICS
 [data-testid="metric-container"] {
 
     background-color: rgba(
-        255,
-        255,
-        255,
+        17,
+        24,
+        39,
         0.8
     );
 
     border: 1px solid rgba(
-        0,
-        0,
-        0,
+        255,
+        255,
+        255,
         0.06
     );
 
@@ -435,7 +423,7 @@ TEXT
 
 p, span, div {
 
-    color: #0F172A;
+    color: white;
 }
 
 /* -----------------------------
@@ -449,7 +437,7 @@ SCROLLBAR
 
 ::-webkit-scrollbar-thumb {
 
-    background: #CBD5E1;
+    background: #374151;
 
     border-radius: 10px;
 }
@@ -462,7 +450,7 @@ SCROLLBAR
 # -----------------------------
 
 st.markdown(
-    '<div class="hero-title">🚀 AI Learning Roadmap Generator</div>',
+    '<div class="hero-title">AI Learning Roadmap Generator</div>',
     unsafe_allow_html=True
 )
 
@@ -472,6 +460,23 @@ st.markdown(
     '</div>',
     unsafe_allow_html=True
 )
+
+# -----------------------------
+# EXAMPLE PROMPTS
+# -----------------------------
+
+st.markdown("### 💡 Example Goals")
+
+ex1, ex2, ex3 = st.columns(3)
+
+with ex1:
+    st.info("Learn Python in 6 months")
+
+with ex2:
+    st.info("Become ML Engineer in 1 year")
+
+with ex3:
+    st.info("Master DSA for placements")
 
 # -----------------------------
 # USER INPUT
@@ -568,7 +573,7 @@ Rules:
 """
 
         with st.spinner(
-            "Generating your AI roadmap..."
+            "🧠 AI is building your personalized roadmap..."
         ):
 
             roadmap = generate_course(
@@ -606,6 +611,30 @@ Rules:
             st.markdown(
                 roadmap
             )
+
+            st.divider()
+
+            # Skills
+
+            st.markdown(
+                "### 🛠 Skills Covered"
+            )
+
+            skills = [
+                "Python",
+                "Projects",
+                "AI",
+                "Learning",
+                "Career"
+            ]
+
+            cols = st.columns(
+                len(skills)
+            )
+
+            for col, skill in zip(cols, skills):
+
+                col.success(skill)
 
             st.divider()
 
@@ -655,3 +684,17 @@ Rules:
                 st.warning(
                     "PDF generation temporarily unavailable."
                 )
+
+# -----------------------------
+# FOOTER
+# -----------------------------
+
+st.markdown("""
+<hr>
+
+<div style='text-align:center; color:#94A3B8; padding:10px;'>
+
+Built with ❤️ using Streamlit + OpenRouter AI
+
+</div>
+""", unsafe_allow_html=True)
