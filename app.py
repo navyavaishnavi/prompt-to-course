@@ -41,7 +41,7 @@ def create_pdf(content):
 
     for line in lines:
 
-        # Skip empty lines
+        # Empty line spacing
 
         if not line.strip():
 
@@ -49,7 +49,7 @@ def create_pdf(content):
 
             continue
 
-        # Prevent very long lines
+        # Prevent long lines crash
 
         if len(line) > 300:
 
@@ -104,33 +104,105 @@ Features:
 )
 
 # -----------------------------
-# PROFESSIONAL DARK CSS
+# MODERN AI CSS
 # -----------------------------
 
 st.markdown("""
 <style>
 
-/* Main Background */
+/* -----------------------------
+MAIN APP BACKGROUND
+----------------------------- */
 
 .stApp {
 
-    background: linear-gradient(
-        135deg,
-        #0F172A,
-        #111827,
-        #1E293B
-    );
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(37, 99, 235, 0.25),
+            transparent 25%
+        ),
+
+        radial-gradient(
+            circle at bottom right,
+            rgba(124, 58, 237, 0.25),
+            transparent 25%
+        ),
+
+        linear-gradient(
+            135deg,
+            #020617,
+            #0F172A,
+            #111827
+        );
 
     color: white;
+
+    background-attachment: fixed;
 }
 
-/* Main */
+/* Floating Glow */
+
+.stApp::before {
+
+    content: "";
+
+    position: fixed;
+
+    width: 500px;
+    height: 500px;
+
+    background: rgba(
+        59,
+        130,
+        246,
+        0.15
+    );
+
+    filter: blur(120px);
+
+    top: -100px;
+    left: -100px;
+
+    z-index: -1;
+}
+
+.stApp::after {
+
+    content: "";
+
+    position: fixed;
+
+    width: 500px;
+    height: 500px;
+
+    background: rgba(
+        168,
+        85,
+        247,
+        0.12
+    );
+
+    filter: blur(120px);
+
+    bottom: -100px;
+    right: -100px;
+
+    z-index: -1;
+}
+
+/* -----------------------------
+MAIN
+----------------------------- */
 
 .main {
+
     padding-top: 2rem;
 }
 
-/* Hero */
+/* -----------------------------
+HERO SECTION
+----------------------------- */
 
 .hero-title {
 
@@ -143,6 +215,8 @@ st.markdown("""
     color: white;
 
     margin-bottom: 0.5rem;
+
+    letter-spacing: -1px;
 }
 
 .hero-subtitle {
@@ -156,16 +230,32 @@ st.markdown("""
     font-size: 1.2rem;
 }
 
-/* Sidebar */
+/* -----------------------------
+SIDEBAR
+----------------------------- */
 
 section[data-testid="stSidebar"] {
 
-    background-color: #0B1120;
+    background-color: rgba(
+        15,
+        23,
+        42,
+        0.85
+    );
 
-    border-right: 1px solid #1E293B;
+    backdrop-filter: blur(12px);
+
+    border-right: 1px solid rgba(
+        255,
+        255,
+        255,
+        0.08
+    );
 }
 
-/* Labels */
+/* -----------------------------
+LABELS
+----------------------------- */
 
 label {
 
@@ -174,19 +264,33 @@ label {
     font-weight: 600 !important;
 }
 
-/* Text Area */
+/* -----------------------------
+TEXT AREA
+----------------------------- */
 
 .stTextArea textarea {
 
-    background-color: #111827 !important;
+    background-color: rgba(
+        17,
+        24,
+        39,
+        0.8
+    ) !important;
 
     color: white !important;
 
-    border-radius: 14px !important;
+    border-radius: 18px !important;
 
-    border: 1px solid #374151 !important;
+    border: 1px solid rgba(
+        255,
+        255,
+        255,
+        0.08
+    ) !important;
 
     font-size: 1rem !important;
+
+    backdrop-filter: blur(12px);
 }
 
 /* Placeholder */
@@ -202,11 +306,21 @@ SELECTBOX
 
 .stSelectbox div[data-baseweb="select"] {
 
-    background: #111827 !important;
+    background: rgba(
+        17,
+        24,
+        39,
+        0.85
+    ) !important;
 
-    border: 1px solid #374151 !important;
+    border: 1px solid rgba(
+        255,
+        255,
+        255,
+        0.08
+    ) !important;
 
-    border-radius: 14px !important;
+    border-radius: 16px !important;
 
     min-height: 50px !important;
 
@@ -217,7 +331,7 @@ SELECTBOX
 
 .stSelectbox div[data-baseweb="select"] > div {
 
-    background: #111827 !important;
+    background: transparent !important;
 
     color: white !important;
 }
@@ -244,13 +358,6 @@ div[data-baseweb="popover"] {
     border: 1px solid #374151 !important;
 }
 
-/* Dropdown List */
-
-ul {
-
-    background-color: #111827 !important;
-}
-
 /* Dropdown Options */
 
 li {
@@ -269,22 +376,17 @@ li:hover {
     color: white !important;
 }
 
-/* Slider */
-
-.stSlider label {
-
-    color: white !important;
-}
-
-/* Buttons */
+/* -----------------------------
+BUTTONS
+----------------------------- */
 
 .stButton>button {
 
     width: 100%;
 
-    height: 3.2rem;
+    height: 3.3rem;
 
-    border-radius: 14px;
+    border-radius: 16px;
 
     border: none;
 
@@ -301,23 +403,32 @@ li:hover {
     );
 
     transition: 0.3s;
-}
-
-/* Button Hover */
-
-.stButton>button:hover {
-
-    transform: scale(1.02);
 
     box-shadow: 0px 0px 20px rgba(
         124,
         58,
         237,
-        0.6
+        0.35
     );
 }
 
-/* Roadmap Box */
+/* Hover */
+
+.stButton>button:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow: 0px 0px 30px rgba(
+        124,
+        58,
+        237,
+        0.55
+    );
+}
+
+/* -----------------------------
+ROADMAP BOX
+----------------------------- */
 
 .roadmap-box {
 
@@ -329,10 +440,10 @@ li:hover {
         17,
         24,
         39,
-        0.8
+        0.65
     );
 
-    backdrop-filter: blur(14px);
+    backdrop-filter: blur(16px);
 
     border: 1px solid rgba(
         255,
@@ -343,7 +454,7 @@ li:hover {
 
     margin-top: 2rem;
 
-    box-shadow: 0px 0px 30px rgba(
+    box-shadow: 0px 0px 40px rgba(
         0,
         0,
         0,
@@ -351,34 +462,43 @@ li:hover {
     );
 }
 
-/* Metrics */
+/* -----------------------------
+METRICS
+----------------------------- */
 
 [data-testid="metric-container"] {
 
-    background-color: #111827;
+    background-color: rgba(
+        17,
+        24,
+        39,
+        0.75
+    );
 
-    border: 1px solid #374151;
+    border: 1px solid rgba(
+        255,
+        255,
+        255,
+        0.08
+    );
 
     padding: 1rem;
 
-    border-radius: 16px;
+    border-radius: 18px;
 }
 
-/* Success */
-
-.stSuccess {
-
-    border-radius: 12px;
-}
-
-/* General Text */
+/* -----------------------------
+GENERAL TEXT
+----------------------------- */
 
 p, span, div {
 
     color: white;
 }
 
-/* Scrollbar */
+/* -----------------------------
+SCROLLBAR
+----------------------------- */
 
 ::-webkit-scrollbar {
 
@@ -467,7 +587,7 @@ generate = st.button(
 )
 
 # -----------------------------
-# ROADMAP GENERATION
+# ROADMAP
 # -----------------------------
 
 if generate:
@@ -539,7 +659,7 @@ Rules:
 
             st.divider()
 
-            # Roadmap
+            # Roadmap Output
 
             st.markdown(
                 roadmap
