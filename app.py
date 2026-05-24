@@ -22,7 +22,7 @@ def create_pdf(content):
         size=12
     )
 
-    # Remove unsupported unicode
+    # Clean unsupported unicode
 
     clean_content = content.encode(
         "latin-1",
@@ -30,8 +30,6 @@ def create_pdf(content):
     ).decode(
         "latin-1"
     )
-
-    # Remove markdown symbols
 
     clean_content = clean_content.replace("#", "")
     clean_content = clean_content.replace("*", "")
@@ -41,15 +39,11 @@ def create_pdf(content):
 
     for line in lines:
 
-        # Empty line spacing
-
         if not line.strip():
 
             pdf.ln(4)
 
             continue
-
-        # Prevent long lines crash
 
         if len(line) > 300:
 
@@ -92,103 +86,52 @@ st.sidebar.title("📊 Dashboard")
 
 st.sidebar.info(
     """
-🚀 AI Learning Platform
+AI Learning Platform
 
 Features:
-- AI Roadmaps
-- PDF Export
-- Progress Tracker
-- Resource Links
-- Practice Platforms
+• AI Roadmaps
+• PDF Export
+• Progress Tracker
+• Resource Links
+• Practice Platforms
 """
 )
 
 # -----------------------------
-# MODERN AI CSS
+# PROFESSIONAL CSS
 # -----------------------------
 
 st.markdown("""
 <style>
 
 /* -----------------------------
-MAIN APP BACKGROUND
+MAIN BACKGROUND
 ----------------------------- */
 
 .stApp {
 
     background:
         radial-gradient(
-            circle at top left,
-            rgba(37, 99, 235, 0.25),
-            transparent 25%
+            circle at top right,
+            rgba(59,130,246,0.08),
+            transparent 20%
         ),
 
         radial-gradient(
-            circle at bottom right,
-            rgba(124, 58, 237, 0.25),
-            transparent 25%
+            circle at bottom left,
+            rgba(168,85,247,0.06),
+            transparent 20%
         ),
 
         linear-gradient(
-            135deg,
-            #020617,
-            #0F172A,
-            #111827
+            180deg,
+            #F8FAFC,
+            #EEF2FF
         );
 
-    color: white;
+    color: #0F172A;
 
     background-attachment: fixed;
-}
-
-/* Floating Glow */
-
-.stApp::before {
-
-    content: "";
-
-    position: fixed;
-
-    width: 500px;
-    height: 500px;
-
-    background: rgba(
-        59,
-        130,
-        246,
-        0.15
-    );
-
-    filter: blur(120px);
-
-    top: -100px;
-    left: -100px;
-
-    z-index: -1;
-}
-
-.stApp::after {
-
-    content: "";
-
-    position: fixed;
-
-    width: 500px;
-    height: 500px;
-
-    background: rgba(
-        168,
-        85,
-        247,
-        0.12
-    );
-
-    filter: blur(120px);
-
-    bottom: -100px;
-    right: -100px;
-
-    z-index: -1;
 }
 
 /* -----------------------------
@@ -201,29 +144,33 @@ MAIN
 }
 
 /* -----------------------------
-HERO SECTION
+HERO TITLE
 ----------------------------- */
 
 .hero-title {
 
     font-size: 4rem;
 
-    font-weight: 800;
+    font-weight: 900;
 
     text-align: center;
 
-    color: white;
+    color: #0F172A;
 
     margin-bottom: 0.5rem;
 
-    letter-spacing: -1px;
+    letter-spacing: -2px;
 }
+
+/* -----------------------------
+SUBTITLE
+----------------------------- */
 
 .hero-subtitle {
 
     text-align: center;
 
-    color: #CBD5E1;
+    color: #475569;
 
     margin-bottom: 3rem;
 
@@ -236,20 +183,20 @@ SIDEBAR
 
 section[data-testid="stSidebar"] {
 
-    background-color: rgba(
-        15,
-        23,
-        42,
-        0.85
+    background: rgba(
+        255,
+        255,
+        255,
+        0.7
     );
 
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(16px);
 
     border-right: 1px solid rgba(
-        255,
-        255,
-        255,
-        0.08
+        0,
+        0,
+        0,
+        0.05
     );
 }
 
@@ -259,7 +206,7 @@ LABELS
 
 label {
 
-    color: white !important;
+    color: #0F172A !important;
 
     font-weight: 600 !important;
 }
@@ -271,20 +218,20 @@ TEXT AREA
 .stTextArea textarea {
 
     background-color: rgba(
-        17,
-        24,
-        39,
+        255,
+        255,
+        255,
         0.8
     ) !important;
 
-    color: white !important;
+    color: #0F172A !important;
 
     border-radius: 18px !important;
 
     border: 1px solid rgba(
-        255,
-        255,
-        255,
+        0,
+        0,
+        0,
         0.08
     ) !important;
 
@@ -297,7 +244,7 @@ TEXT AREA
 
 .stTextArea textarea::placeholder {
 
-    color: #9CA3AF !important;
+    color: #64748B !important;
 }
 
 /* -----------------------------
@@ -307,16 +254,16 @@ SELECTBOX
 .stSelectbox div[data-baseweb="select"] {
 
     background: rgba(
-        17,
-        24,
-        39,
-        0.85
+        255,
+        255,
+        255,
+        0.8
     ) !important;
 
     border: 1px solid rgba(
-        255,
-        255,
-        255,
+        0,
+        0,
+        0,
         0.08
     ) !important;
 
@@ -327,57 +274,57 @@ SELECTBOX
     box-shadow: none !important;
 }
 
-/* Internal Container */
+/* Internal Select */
 
 .stSelectbox div[data-baseweb="select"] > div {
 
     background: transparent !important;
 
-    color: white !important;
+    color: #0F172A !important;
 }
 
-/* Remove White Input */
+/* Remove White Inner Box */
 
 .stSelectbox input {
 
     background: transparent !important;
 
-    color: white !important;
+    color: #0F172A !important;
 
-    caret-color: white !important;
+    caret-color: #0F172A !important;
 }
 
-/* Dropdown Popup */
+/* Dropdown */
 
 div[data-baseweb="popover"] {
 
-    background-color: #111827 !important;
+    background-color: white !important;
 
     border-radius: 12px !important;
 
-    border: 1px solid #374151 !important;
+    border: 1px solid #E2E8F0 !important;
 }
 
 /* Dropdown Options */
 
 li {
 
-    background-color: #111827 !important;
+    background-color: white !important;
 
-    color: white !important;
+    color: #0F172A !important;
 }
 
 /* Hover */
 
 li:hover {
 
-    background-color: #2563EB !important;
+    background-color: #EEF2FF !important;
 
-    color: white !important;
+    color: #2563EB !important;
 }
 
 /* -----------------------------
-BUTTONS
+BUTTON
 ----------------------------- */
 
 .stButton>button {
@@ -404,12 +351,13 @@ BUTTONS
 
     transition: 0.3s;
 
-    box-shadow: 0px 0px 20px rgba(
-        124,
-        58,
-        237,
-        0.35
-    );
+    box-shadow:
+        0 8px 25px rgba(
+            37,
+            99,
+            235,
+            0.2
+        );
 }
 
 /* Hover */
@@ -417,13 +365,6 @@ BUTTONS
 .stButton>button:hover {
 
     transform: translateY(-2px);
-
-    box-shadow: 0px 0px 30px rgba(
-        124,
-        58,
-        237,
-        0.55
-    );
 }
 
 /* -----------------------------
@@ -432,34 +373,35 @@ ROADMAP BOX
 
 .roadmap-box {
 
-    padding: 2rem;
+    padding: 2.5rem;
 
     border-radius: 24px;
 
     background: rgba(
-        17,
-        24,
-        39,
-        0.65
+        255,
+        255,
+        255,
+        0.75
     );
 
-    backdrop-filter: blur(16px);
+    backdrop-filter: blur(18px);
 
     border: 1px solid rgba(
         255,
         255,
         255,
-        0.08
+        0.6
     );
 
     margin-top: 2rem;
 
-    box-shadow: 0px 0px 40px rgba(
-        0,
-        0,
-        0,
-        0.35
-    );
+    box-shadow:
+        0 10px 40px rgba(
+            15,
+            23,
+            42,
+            0.08
+        );
 }
 
 /* -----------------------------
@@ -469,17 +411,17 @@ METRICS
 [data-testid="metric-container"] {
 
     background-color: rgba(
-        17,
-        24,
-        39,
-        0.75
+        255,
+        255,
+        255,
+        0.8
     );
 
     border: 1px solid rgba(
-        255,
-        255,
-        255,
-        0.08
+        0,
+        0,
+        0,
+        0.06
     );
 
     padding: 1rem;
@@ -488,12 +430,12 @@ METRICS
 }
 
 /* -----------------------------
-GENERAL TEXT
+TEXT
 ----------------------------- */
 
 p, span, div {
 
-    color: white;
+    color: #0F172A;
 }
 
 /* -----------------------------
@@ -507,7 +449,7 @@ SCROLLBAR
 
 ::-webkit-scrollbar-thumb {
 
-    background: #374151;
+    background: #CBD5E1;
 
     border-radius: 10px;
 }
@@ -542,7 +484,7 @@ prompt = st.text_area(
 )
 
 # -----------------------------
-# EXTRA INPUTS
+# INPUTS
 # -----------------------------
 
 col1, col2 = st.columns(2)
@@ -659,7 +601,7 @@ Rules:
 
             st.divider()
 
-            # Roadmap Output
+            # Roadmap
 
             st.markdown(
                 roadmap
@@ -688,9 +630,7 @@ Rules:
                 "✅ Roadmap generated successfully!"
             )
 
-            # -----------------------------
-            # PDF DOWNLOAD
-            # -----------------------------
+            # PDF Download
 
             try:
 
@@ -713,5 +653,5 @@ Rules:
             except:
 
                 st.warning(
-                    "PDF generation temporarily unavailable for this roadmap."
+                    "PDF generation temporarily unavailable."
                 )
